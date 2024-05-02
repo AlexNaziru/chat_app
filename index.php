@@ -15,11 +15,11 @@
         <div class="name-details">
           <div class="field input">
             <label>First Name</label>
-            <input type="text" name="fname" placeholder="First name" required>
+            <input type="text" name="firstname" placeholder="First name" required>
           </div>
           <div class="field input">
             <label>Last Name</label>
-            <input type="text" name="lname" placeholder="Last name" required>
+            <input type="text" name="lastname" placeholder="Last name" required>
           </div>
         </div>
         <div class="field input">
