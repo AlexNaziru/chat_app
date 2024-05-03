@@ -1,5 +1,6 @@
 const form = document.querySelector(".signup form"),
-    continueBtn = form.querySelector(".button input");
+    continueBtn = form.querySelector(".button input"),
+    errorTxt = form.querySelector(".error-text");
 
 form.onsubmit = (e) => {
     e.preventDefault(); // Preventing the form from submitting
@@ -13,11 +14,17 @@ continueBtn.onclick = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = xhr.response;
-                console.log(data);
+                if (data === "success") {
+
+                } else {
+                    errorTxt.textContent = data;
+                    errorTxt.style.display = "block";
+                }
             }
         }
     }
     // Sending the form data through ajax to php
-    xhr.send();
+    let formData = new FormData(form)  // Creating a new form data object
+    xhr.send(formData); // Sending formData to php
 
 }
