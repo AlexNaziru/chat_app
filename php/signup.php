@@ -1,5 +1,6 @@
 <?php
 include_once "config.php";
+session_start();
 $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
 $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -30,7 +31,7 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
                     // moving the users img to a particular folder, we don't move the file in our db, just the url
                     $new_image_name = $time.$img_name;
                     if (move_uploaded_file($tmp_name, "images/".$new_image_name)) { // if user uploaded img move to our folder successfully
-                        $status = "Actine now"; // when the users sign in, status will be active
+                        $status = "Active now"; // when the users sign in, status will be active
                         $random_id = rand(time(), 10000000); // creating random if for user
                         // inserting user data into the db table
                         $sql2 = mysqli_query($conn, "INSERT INTO users (unique_id, firstname, lastname, email, password, img, status)
@@ -38,10 +39,10 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($passwor
                                                 '{$new_image_name}', '{$status}')");
                         if ($sql2) { // if data inserted
                             $sql3 = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");
-                            if (mysqli_query($sql3) > 0) {
+                            if (mysqli_num_rows($sql3) > 0) {
                                 $row = mysqli_fetch_assoc($sql3);
                                 $_SESSION["unique_id"] = $row["unique_id"]; // using this session we used in user unique_id in other php files
-                                echo "Success";
+                                echo "success";
                             }
                         } else {
                             echo "Something went wrong!";
